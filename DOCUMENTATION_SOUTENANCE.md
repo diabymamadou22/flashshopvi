@@ -82,11 +82,12 @@ Pour une boutique fonctionnant sur un poste dédié sans serveur distant complex
 - **Fonctionnement hors-ligne** (après chargement de l'application) ;
 - **Format JSON standard** facilement exportable pour archivage.
 
-### 4.2 Clé de stockage et cycle de vie (`src/services/database.ts`)
-Toutes les collections sont stockées sous une clé unique : `flash_shop_db_v1`.
-1. **`chargerBase()` :** Lit `localStorage.getItem('flash_shop_db_v1')` au démarrage. Si la clé est absente, écrit et retourne `DONNEES_INITIALES`.
-2. **`sauvegarderBase(donnees)` :** Sérialise l'objet `BaseDonnees` en chaîne JSON via `JSON.stringify` et le sauvegarde à chaque mise à jour de l'état React dans `App.tsx` grâce à `useEffect`.
-3. **`reinitialiserBase()` :** Restaure les données de démonstration initiales.
+### 4.2 Clé de stockage et persistance après redémarrage (`src/services/database.ts`)
+Toutes les collections sont stockées sous la clé `flash_shop_db_v1` dans `localStorage` et dupliquées automatiquement dans **IndexedDB** (`flash_shop_local_db`) :
+1. **`chargerBase()` :** Lit `localStorage` au démarrage pour un affichage instantané.
+2. **`sauvegarderBase(donnees)` :** Enregistre simultanément dans `localStorage` et dans `IndexedDB` à chaque mise à jour via `useEffect`.
+3. **`demanderStockagePersistant()` & `verifierRestaurationLocale()` :** Demande au navigateur mobile (`navigator.storage.persist()`) de protéger les données contre le nettoyage automatique et restaure depuis `IndexedDB` si nécessaire après un redémarrage du téléphone.
+4. **`reinitialiserBase()` & `importerBaseJson()` :** Permettent de restaurer les données initiales ou d'importer une sauvegarde `.json`.
 
 ### 4.3 Dictionnaire des entités (`src/types.ts`)
 - **`Categorie`** : `id`, `nom`, `description`.

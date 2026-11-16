@@ -49,45 +49,45 @@ export default function Header({
   const IconePage = info.icone;
 
   return (
-    <header className="no-print sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6">
+    <header className="no-print sticky top-0 z-20 flex h-14 items-center justify-between border-b border-slate-200 bg-white px-3 sm:h-16 sm:px-6">
       {/* Zone gauche : bouton mobile + titre de page */}
-      <div className="flex items-center gap-3">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
         <button
           type="button"
           onClick={onOuvrirMenu}
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900 lg:hidden"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 lg:hidden"
           aria-label="Ouvrir le menu"
         >
           <Menu className="h-5 w-5" />
         </button>
-        <div className="flex items-center gap-2.5">
-          <IconePage className="h-5 w-5 text-[#0A3072]" />
-          <h1 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
+        <div className="flex min-w-0 items-center gap-2">
+          <IconePage className="h-5 w-5 shrink-0 text-[#0A3072]" />
+          <h1 className="truncate text-base font-bold tracking-tight text-slate-900 sm:text-xl">
             {info.titre}
           </h1>
         </div>
       </div>
 
       {/* Zone droite : bouton installation + alertes stock + compte gérant */}
-      <div className="relative flex items-center gap-3">
+      <div className="relative flex shrink-0 items-center gap-1.5 sm:gap-3">
         <PWAInstallButton />
 
         <button
           type="button"
           onClick={() => setAlertesOuvertes((prev) => !prev)}
-          className="relative rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+          className="relative flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
           aria-label="Alertes de stock"
         >
           <Bell className="h-5 w-5" />
           {produitsEnAlerte.length > 0 && (
-            <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white tabular-nums">
+            <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white tabular-nums">
               {produitsEnAlerte.length}
             </span>
           )}
         </button>
 
         {alertesOuvertes && (
-          <div className="absolute right-0 top-12 z-30 w-80 rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
+          <div className="absolute right-0 top-12 z-30 w-[min(20rem,calc(100vw-1.5rem))] rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
             <div className="mb-2 flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="text-sm font-semibold text-slate-900">
                 Alertes stock ({produitsEnAlerte.length})

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import Header from './components/Header';
+import MobileBottomNav from './components/MobileBottomNav';
 import Sidebar from './components/Sidebar';
 import CategoriesPage from './pages/CategoriesPage';
 import DashboardPage from './pages/DashboardPage';
@@ -10,7 +11,14 @@ import ProduitsPage from './pages/ProduitsPage';
 import RapportsPage from './pages/RapportsPage';
 import StocksPage from './pages/StocksPage';
 import VentesCaissePage from './pages/VentesCaissePage';
-import { chargerBase, reinitialiserBase, sauvegarderBase } from './services/database';
+import {
+  chargerBase,
+  demanderStockagePersistant,
+  importerBaseJson,
+  reinitialiserBase,
+  sauvegarderBase,
+  verifierRestaurationLocale,
+} from './services/database';
 import {
   BaseDonnees,
   Categorie,
@@ -29,7 +37,17 @@ export default function App() {
   const [pageActive, setPageActive] = useState<PageId>('produits');
   const [menuMobileOuvert, setMenuMobileOuvert] = useState(false);
 
-  // Sauvegarde automatique dans localStorage à chaque modification des données
+  // Demande de stockage persistant + restauration depuis IndexedDB si nécessaire
+  useEffect(() => {
+    void demanderStockagePersistant();
+    void verifierRestaurationLocale().then((restauree) => {
+      if (restauree) {
+        setDonnees(restauree);
+      }
+    });
+  }, []);
+
+  // Sauvegarde automatique dans localStorage et IndexedDB à chaque modification
   useEffect(() => {
     sauvegarderBase(donnees);
   }, [donnees]);
@@ -149,6 +167,11 @@ export default function App() {
     }));
   };
 
+  const handleImporter = (contenuJson: string) => {
+    const nouvelleBase = importerBaseJson(contenuJson);
+    setDonnees(nouvelleBase);
+  };
+
   const handleReinitialiser = () => {
     const basePropre = reinitialiserBase();
     setDonnees(basePropre);
@@ -173,7 +196,7 @@ export default function App() {
           onAllerPage={setPageActive}
         />
 
-        <main className="flex-1 p-4 sm:p-6">
+        <main className="flex-1 p-3 pb-24 sm:p-6 lg:pb-6">
           {pageActive === 'dashboard' && (
             <DashboardPage donnees={donnees} onAllerPage={setPageActive} />
           )}
@@ -235,11 +258,18 @@ export default function App() {
             <ParametresPage
               donnees={donnees}
               onSauvegarderParametres={sauvegarderParametres}
+              onImporterBase={handleImporter}
               onReinitialiserBase={handleReinitialiser}
             />
           )}
         </main>
       </div>
+
+      <MobileBottomNav
+        pageActive={pageActive}
+        onChangerPage={setPageActive}
+        onOuvrirMenu={() => setMenuMobileOuvert(true)}
+      />
     </div>
   );
 }

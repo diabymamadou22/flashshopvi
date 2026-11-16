@@ -140,19 +140,36 @@ export default function VentesCaissePage({
     setErreur('');
   };
 
+  const nbArticlesPanier = panier.reduce((s, l) => s + l.quantite, 0);
+
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      {/* Bandeau d'accès rapide au panier sur mobile */}
+      {nbArticlesPanier > 0 && (
+        <div className="no-print lg:hidden">
+          <a
+            href="#panier-caisse"
+            className="flex min-h-[44px] items-center justify-between rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm"
+          >
+            <span>Panier ({nbArticlesPanier} article(s))</span>
+            <span className="font-mono tabular-nums">
+              {formatPrix(totalPanier, parametres.devise)} →
+            </span>
+          </a>
+        </div>
+      )}
+
       {/* Colonne gauche : sélection des produits */}
       <section className="no-print space-y-4 lg:col-span-7">
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={recherche}
               onChange={(e) => setRecherche(e.target.value)}
-              placeholder="Chercher un article par nom, référence ou code-barres..."
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm focus:border-blue-600 focus:bg-white focus:outline-none"
+              placeholder="Chercher un article (nom, référence, code-barres)..."
+              className="min-h-[44px] w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm focus:border-blue-600 focus:bg-white focus:outline-none"
             />
           </div>
         </div>
@@ -185,7 +202,7 @@ export default function VentesCaissePage({
                   type="button"
                   disabled={p.stock <= 0}
                   onClick={() => ajouterAuPanier(p)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
+                  className="inline-flex min-h-[40px] items-center gap-1.5 rounded-lg bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   Ajouter
@@ -197,15 +214,15 @@ export default function VentesCaissePage({
       </section>
 
       {/* Colonne droite : Panier et encaissement */}
-      <section className="space-y-4 lg:col-span-5">
-        <div className="no-print rounded-xl border border-slate-200 bg-white p-5">
+      <section id="panier-caisse" className="space-y-4 lg:col-span-5">
+        <div className="no-print rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
           <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
             <div className="flex items-center gap-2">
               <ShoppingCart className="h-5 w-5 text-[#0A3072]" />
               <h2 className="text-base font-bold text-slate-900">Panier en cours</h2>
             </div>
             <span className="text-xs font-semibold text-slate-500 tabular-nums">
-              {panier.reduce((s, l) => s + l.quantite, 0)} article(s)
+              {nbArticlesPanier} article(s)
             </span>
           </div>
 
@@ -217,7 +234,7 @@ export default function VentesCaissePage({
 
           {panier.length === 0 ? (
             <p className="py-8 text-center text-sm text-slate-500">
-              Sélectionnez des produits à gauche pour démarrer une vente.
+              Sélectionnez des produits pour démarrer une vente.
             </p>
           ) : (
             <div className="divide-y divide-slate-100">
@@ -232,22 +249,22 @@ export default function VentesCaissePage({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1">
                     <button
                       type="button"
                       onClick={() => modifierQuantite(ligne.produitId, -1)}
-                      className="rounded-md border border-slate-200 p-1 text-slate-600 hover:bg-slate-50"
+                      className="flex min-h-[38px] min-w-[38px] items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50"
                       aria-label="Diminuer la quantité"
                     >
                       <Minus className="h-3.5 w-3.5" />
                     </button>
-                    <span className="w-6 text-center font-mono text-xs font-bold tabular-nums">
+                    <span className="w-7 text-center font-mono text-xs font-bold tabular-nums">
                       {ligne.quantite}
                     </span>
                     <button
                       type="button"
                       onClick={() => modifierQuantite(ligne.produitId, 1)}
-                      className="rounded-md border border-slate-200 p-1 text-slate-600 hover:bg-slate-50"
+                      className="flex min-h-[38px] min-w-[38px] items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50"
                       aria-label="Augmenter la quantité"
                     >
                       <Plus className="h-3.5 w-3.5" />
@@ -255,10 +272,10 @@ export default function VentesCaissePage({
                     <button
                       type="button"
                       onClick={() => retirerDuPanier(ligne.produitId)}
-                      className="ml-1 rounded-md p-1 text-red-600 hover:bg-red-50"
+                      className="ml-1 flex min-h-[38px] min-w-[38px] items-center justify-center rounded-md text-red-600 hover:bg-red-50"
                       aria-label="Retirer du panier"
                     >
-                      <Trash2 className="h-3.5 w-3.5" />
+                      <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 </div>
@@ -273,7 +290,7 @@ export default function VentesCaissePage({
                 type="text"
                 value={clientNom}
                 onChange={(e) => setClientNom(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+                className="min-h-[44px] w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
               />
             </div>
 
@@ -284,7 +301,7 @@ export default function VentesCaissePage({
               <select
                 value={modePaiement}
                 onChange={(e) => setModePaiement(e.target.value as ModePaiement)}
-                className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+                className="min-h-[44px] w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
               >
                 <option value="Especes">Espèces</option>
                 <option value="Orange Money">Orange Money</option>
@@ -304,7 +321,7 @@ export default function VentesCaissePage({
               type="button"
               onClick={encaisserVente}
               disabled={panier.length === 0}
-              className="w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
+              className="min-h-[48px] w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
             >
               Valider et encaisser la vente
             </button>

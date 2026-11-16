@@ -244,55 +244,61 @@ export default function ProduitsPage({
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 sm:space-y-5">
       {/* Ligne des 4 cartes KPI + Bouton Ajouter */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
-        <div className="flex items-center gap-3.5 rounded-xl border border-blue-100 bg-white p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white">
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-5">
+        <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-white p-3.5 sm:p-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white sm:h-11 sm:w-11">
             <Package className="h-5 w-5" />
           </div>
-          <div>
-            <div className="text-xs font-medium text-slate-600">Total produits</div>
-            <div className="text-2xl font-bold text-slate-900 tabular-nums">{stats.total}</div>
+          <div className="min-w-0">
+            <div className="truncate text-xs font-medium text-slate-600">Total produits</div>
+            <div className="text-xl font-bold text-slate-900 tabular-nums sm:text-2xl">
+              {stats.total}
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3.5 rounded-xl border border-emerald-100 bg-white p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white">
+        <div className="flex items-center gap-3 rounded-xl border border-emerald-100 bg-white p-3.5 sm:p-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white sm:h-11 sm:w-11">
             <Boxes className="h-5 w-5" />
           </div>
-          <div>
-            <div className="text-xs font-medium text-slate-600">En stock</div>
-            <div className="text-2xl font-bold text-emerald-700 tabular-nums">{stats.enStock}</div>
+          <div className="min-w-0">
+            <div className="truncate text-xs font-medium text-slate-600">En stock</div>
+            <div className="text-xl font-bold text-emerald-700 tabular-nums sm:text-2xl">
+              {stats.enStock}
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3.5 rounded-xl border border-amber-100 bg-white p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white">
+        <div className="flex items-center gap-3 rounded-xl border border-amber-100 bg-white p-3.5 sm:p-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white sm:h-11 sm:w-11">
             <AlertTriangle className="h-5 w-5" />
           </div>
-          <div>
-            <div className="text-xs font-medium text-slate-600">Stock faible</div>
-            <div className="text-2xl font-bold text-amber-600 tabular-nums">
+          <div className="min-w-0">
+            <div className="truncate text-xs font-medium text-slate-600">Stock faible</div>
+            <div className="text-xl font-bold text-amber-600 tabular-nums sm:text-2xl">
               {stats.stockFaible}
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3.5 rounded-xl border border-red-100 bg-white p-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white">
+        <div className="flex items-center gap-3 rounded-xl border border-red-100 bg-white p-3.5 sm:p-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white sm:h-11 sm:w-11">
             <XCircle className="h-5 w-5" />
           </div>
-          <div>
-            <div className="text-xs font-medium text-slate-600">Rupture de stock</div>
-            <div className="text-2xl font-bold text-red-600 tabular-nums">{stats.rupture}</div>
+          <div className="min-w-0">
+            <div className="truncate text-xs font-medium text-slate-600">Rupture</div>
+            <div className="text-xl font-bold text-red-600 tabular-nums sm:text-2xl">
+              {stats.rupture}
+            </div>
           </div>
         </div>
 
         <button
           type="button"
           onClick={ouvrirAjout}
-          className="flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800 whitespace-nowrap"
+          className="col-span-2 flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800 whitespace-nowrap xl:col-span-1"
         >
           <Plus className="h-4 w-4 shrink-0" />
           Ajouter un produit
@@ -300,7 +306,7 @@ export default function ProduitsPage({
       </div>
 
       {/* Barre de recherche et filtres */}
-      <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 md:flex-row md:items-center">
+      <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 md:flex-row md:items-center">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
@@ -310,12 +316,12 @@ export default function ProduitsPage({
               setRecherche(e.target.value);
               setPageActuelle(1);
             }}
-            placeholder="Rechercher un produit (nom, référence, code-barres)..."
-            className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none"
+            placeholder="Rechercher (nom, référence, code-barres)..."
+            className="min-h-[44px] w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none"
           />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row sm:gap-3">
           <select
             value={filtreCategorie}
             onChange={(e) => {
@@ -323,9 +329,9 @@ export default function ProduitsPage({
               setPageActuelle(1);
             }}
             aria-label="Filtrer par catégorie"
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none"
+            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none"
           >
-            <option value="toutes">Toutes les catégories</option>
+            <option value="toutes">Toutes catégories</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.nom}
@@ -340,9 +346,9 @@ export default function ProduitsPage({
               setPageActuelle(1);
             }}
             aria-label="Filtrer par statut"
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none"
+            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none"
           >
-            <option value="tous">Tous les statuts</option>
+            <option value="tous">Tous statuts</option>
             <option value="en_stock">En stock</option>
             <option value="stock_faible">Stock faible</option>
             <option value="rupture">Rupture de stock</option>
@@ -350,9 +356,97 @@ export default function ProduitsPage({
         </div>
       </div>
 
-      {/* Tableau des produits (sans images) */}
+      {/* Vue mobile en cartes (< md) */}
+      <div className="space-y-3 md:hidden">
+        {produitsPage.length === 0 ? (
+          <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
+            <p className="text-sm font-medium text-slate-700">Aucun produit trouvé.</p>
+            <p className="mt-1 text-xs text-slate-500">
+              Modifiez vos filtres ou ajoutez un nouveau produit en boutique.
+            </p>
+          </div>
+        ) : (
+          produitsPage.map((produit) => {
+            const statut = getStatutStock(produit.stock, produit.seuil);
+            return (
+              <div
+                key={produit.id}
+                className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="font-mono text-xs font-semibold text-slate-500">
+                      {produit.reference} · {nomCategorieParId[produit.categorieId] ?? 'Non classé'}
+                    </div>
+                    <h3 className="mt-0.5 text-sm font-bold text-slate-900">{produit.nom}</h3>
+                  </div>
+                  <div className="shrink-0">{afficherStatut(produit.stock, produit.seuil)}</div>
+                </div>
+
+                <div className="mt-3 grid grid-cols-3 gap-2 rounded-lg bg-slate-50 p-2.5 text-xs">
+                  <div>
+                    <div className="text-slate-500">Achat</div>
+                    <div className="font-mono font-semibold text-slate-800 tabular-nums">
+                      {formatNombre(produit.prixAchat)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500">Vente</div>
+                    <div className="font-mono font-bold text-blue-700 tabular-nums">
+                      {formatNombre(produit.prixVente)}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-slate-500">Stock / Seuil</div>
+                    <div
+                      className={`font-mono font-bold tabular-nums ${
+                        statut === 'rupture'
+                          ? 'text-red-600'
+                          : statut === 'stock_faible'
+                          ? 'text-amber-600'
+                          : 'text-emerald-700'
+                      }`}
+                    >
+                      {produit.stock} / {produit.seuil}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setProduitDetail(produit)}
+                    className="flex min-h-[40px] items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 text-xs font-semibold text-white hover:bg-blue-700"
+                  >
+                    <Eye className="h-3.5 w-3.5" />
+                    Voir
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => ouvrirEdition(produit)}
+                    className="flex min-h-[40px] items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-3 text-xs font-semibold text-white hover:bg-indigo-700"
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                    Modifier
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProduitASupprimer(produit)}
+                    className="flex min-h-[40px] items-center justify-center gap-1.5 rounded-lg bg-red-600 px-3 text-xs font-semibold text-white hover:bg-red-700"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Suppr.
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Tableau des produits sur tablette / PC (>= md) */}
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-        <div className="overflow-x-auto">
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="bg-[#0D357A] text-xs font-semibold text-white">
@@ -459,7 +553,7 @@ export default function ProduitsPage({
         </div>
 
         {/* Pied de tableau : pagination */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-slate-200 px-4 py-3 text-xs text-slate-600 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 px-4 py-3 text-xs text-slate-600 md:border-t md:border-slate-200 sm:flex-row">
           <div className="tabular-nums">
             Affichage de {produitsFiltres.length === 0 ? 0 : debut + 1} à{' '}
             {Math.min(debut + parPage, produitsFiltres.length)} sur {produitsFiltres.length}{' '}
@@ -474,7 +568,7 @@ export default function ProduitsPage({
                 setPageActuelle(1);
               }}
               aria-label="Nombre de lignes par page"
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-700"
+              className="min-h-[38px] rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-700"
             >
               <option value={6}>6 par page</option>
               <option value={10}>10 par page</option>
@@ -486,19 +580,19 @@ export default function ProduitsPage({
                 type="button"
                 disabled={pageSecurisee <= 1}
                 onClick={() => setPageActuelle((p) => Math.max(1, p - 1))}
-                className="rounded-lg border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+                className="flex min-h-[38px] min-w-[38px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
                 aria-label="Page précédente"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
               <span className="px-2 font-medium text-slate-800 tabular-nums">
-                Page {pageSecurisee} / {totalPages}
+                {pageSecurisee} / {totalPages}
               </span>
               <button
                 type="button"
                 disabled={pageSecurisee >= totalPages}
                 onClick={() => setPageActuelle((p) => Math.min(totalPages, p + 1))}
-                className="rounded-lg border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
+                className="flex min-h-[38px] min-w-[38px] items-center justify-center rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40"
                 aria-label="Page suivante"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -510,8 +604,8 @@ export default function ProduitsPage({
 
       {/* Modale Ajout / Modification de produit */}
       {modalFormOuverte && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-3 sm:p-4">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-5 shadow-xl sm:p-6">
             <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 className="text-lg font-bold text-slate-900">
                 {produitEnEdition ? 'Modifier le produit' : 'Ajouter un produit'}

@@ -130,7 +130,7 @@ export default function CategoriesPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
+              className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
             >
               <Plus className="h-4 w-4" />
               {categorieEnEdition ? 'Mettre à jour' : 'Ajouter'}
@@ -139,7 +139,7 @@ export default function CategoriesPage({
               <button
                 type="button"
                 onClick={annulerEdition}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                className="min-h-[44px] rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
               >
                 Annuler
               </button>
@@ -150,13 +150,52 @@ export default function CategoriesPage({
 
       {/* Liste des catégories */}
       <section className="overflow-hidden rounded-xl border border-slate-200 bg-white lg:col-span-2">
-        <div className="border-b border-slate-200 px-5 py-4">
+        <div className="border-b border-slate-200 px-4 py-3.5 sm:px-5 sm:py-4">
           <h2 className="text-base font-bold text-slate-900">
             Liste des catégories ({categories.length})
           </h2>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Vue cartes mobile (< md) */}
+        <div className="divide-y divide-slate-100 md:hidden">
+          {categories.length === 0 ? (
+            <p className="px-4 py-8 text-center text-sm text-slate-500">
+              Aucune catégorie enregistrée.
+            </p>
+          ) : (
+            categories.map((cat) => (
+              <div key={cat.id} className="flex items-center justify-between gap-3 p-4">
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold text-slate-900">{cat.nom}</div>
+                  <div className="text-xs text-slate-500">{cat.description || '—'}</div>
+                  <div className="mt-1 font-mono text-xs font-semibold text-blue-700 tabular-nums">
+                    {compterProduits(cat.id)} produit(s)
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => demarrerEdition(cat)}
+                    className="flex min-h-[40px] min-w-[40px] items-center justify-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
+                    aria-label={`Modifier ${cat.nom}`}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => tenterSuppression(cat)}
+                    className="flex min-h-[40px] min-w-[40px] items-center justify-center rounded-lg bg-red-600 text-white hover:bg-red-700"
+                    aria-label={`Supprimer ${cat.nom}`}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="bg-[#0D357A] text-xs font-semibold text-white">

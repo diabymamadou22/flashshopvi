@@ -92,7 +92,7 @@ export default function DepensesPage({
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-700 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"
+            className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-blue-700 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"
           >
             <Plus className="h-4 w-4" />
             Ajouter la dépense
@@ -102,7 +102,7 @@ export default function DepensesPage({
 
       {/* Tableau des dépenses */}
       <section className="overflow-hidden rounded-xl border border-slate-200 bg-white lg:col-span-2">
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-3.5 sm:px-5 sm:py-4">
           <h2 className="text-base font-bold text-slate-900">
             Dépenses enregistrées ({depenses.length})
           </h2>
@@ -111,7 +111,38 @@ export default function DepensesPage({
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Vue cartes mobile (< md) */}
+        <div className="divide-y divide-slate-100 md:hidden">
+          {depenses.length === 0 ? (
+            <p className="px-4 py-10 text-center text-sm text-slate-500">Aucune dépense saisie.</p>
+          ) : (
+            depenses.map((d) => (
+              <div key={d.id} className="flex items-center justify-between gap-3 p-4">
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold text-slate-900">{d.libelle}</div>
+                  <div className="text-xs text-slate-500">
+                    {d.categorie} · {formatDateCourte(d.date)}
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span className="font-mono text-sm font-bold text-slate-900 tabular-nums">
+                    {formatPrix(d.montant, devise)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onSupprimerDepense(d.id)}
+                    className="flex min-h-[40px] min-w-[40px] items-center justify-center rounded-lg bg-red-600 text-white hover:bg-red-700"
+                    aria-label={`Supprimer ${d.libelle}`}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full border-collapse text-left text-sm">
             <thead>
               <tr className="bg-[#0D357A] text-xs font-semibold text-white">
