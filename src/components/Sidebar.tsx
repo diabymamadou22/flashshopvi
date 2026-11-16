@@ -12,7 +12,6 @@ import {
   Store,
   Wallet,
   X,
-  Zap,
 } from 'lucide-react';
 import { PageId, ParametresBoutique } from '../types';
 
@@ -67,9 +66,12 @@ export default function Sidebar({
           {/* En-tête de la marque */}
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/20">
-                <Zap className="h-5 w-5 text-amber-400" />
-              </div>
+              <img
+                src="/pwa-192x192.png"
+                alt="Icône FLASH-SHOP"
+                referrerPolicy="no-referrer"
+                className="h-10 w-10 shrink-0 rounded-xl object-contain"
+              />
               <div className="min-w-0">
                 <div className="truncate text-lg font-bold tracking-tight text-white">
                   {parametres.nomBoutique}

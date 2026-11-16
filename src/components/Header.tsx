@@ -15,6 +15,7 @@ import {
   Wallet,
 } from 'lucide-react';
 import { PageId, ParametresBoutique, Produit } from '../types';
+import PWAInstallButton from './PWAInstallButton';
 
 interface HeaderProps {
   pageActive: PageId;
@@ -67,8 +68,10 @@ export default function Header({
         </div>
       </div>
 
-      {/* Zone droite : alertes stock + compte gérant */}
+      {/* Zone droite : bouton installation + alertes stock + compte gérant */}
       <div className="relative flex items-center gap-3">
+        <PWAInstallButton />
+
         <button
           type="button"
           onClick={() => setAlertesOuvertes((prev) => !prev)}
