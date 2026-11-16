@@ -1,0 +1,6 @@
+{
+  "name": "FLASH-SHOP",
+  "description": "Application de gestion commerciale et de stock pour boutique électronique.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
